@@ -75,7 +75,7 @@ export class Table extends React.Component<TableProps> {
 
 	@action
 	private onStop(event: any, data: DraggableData) {
-		this.props.model.groupUuid = this.snapGroup;
+		globalState.getGroup(this.props.model.groupUuid).forEach(t => t.groupUuid = this.snapGroup);
 		this.select();
 
 		if (this.props.onStop) {
@@ -85,20 +85,34 @@ export class Table extends React.Component<TableProps> {
 
 	@action
 	private onDrag(event: any, data: DraggableData) {
-		this.props.model.position.x = data.x;
-		this.props.model.position.y = data.y;
+		const model = this.props.model;
 
-		if (this.props.model.uuid) {
-			const snapPoint = globalState.snapObject(this.props.model);
+		const lastX = model.position.x;
+		const lastY = model.position.y;
+		model.position.x = data.x;
+		model.position.y = data.y;
+
+		if (model.uuid) {
+			const snapPoint = globalState.snapObject(model);
 			if (snapPoint) {
-				this.props.model.position.x = snapPoint.x;
-				this.props.model.position.y = snapPoint.y;
+				model.position.x = snapPoint.x;
+				model.position.y = snapPoint.y;
 
 				this.snapGroup = globalState.getObject(snapPoint.uuid).groupUuid;
 			}
+			else {
+				this.snapGroup = model.groupUuid;
+			}
 		}
-		else {
-			this.snapGroup = this.props.model.groupUuid;
+
+		const deltaX = model.position.x - lastX;
+		const deltaY = model.position.y - lastY;
+
+		const group = globalState.getGroup(model.groupUuid);
+		for (const table of group) {
+			if (table.uuid === model.uuid) continue;
+			table.position.x += deltaX;
+			table.position.y += deltaY;
 		}
 	}
 }

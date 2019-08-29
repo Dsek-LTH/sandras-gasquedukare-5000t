@@ -74,10 +74,10 @@ class StateStore {
 		return model;
 	}
 
-	snapPoint(point: Position, skipUuid: string){
+	snapPoint(point: Position, skipGroupUuid: string){
 		let points = [];
 		for (let o of this.getObjects()) {
-			if (o.uuid === skipUuid) continue;
+			if (o.groupUuid === skipGroupUuid) continue;
 			points.push(...(o.seatPositions));
 		}
 
@@ -94,7 +94,7 @@ class StateStore {
 
 	snapObject(object: ObjectModel) {
 		let points = object.seatPositions.map(
-			p => this.snapPoint(p, object.uuid)
+			p => this.snapPoint(p, object.groupUuid)
 		).filter(p => p !== null);
 
 		if (points.length > 0) {

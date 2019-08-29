@@ -19,6 +19,7 @@ export class Floor extends React.Component {
 				}
 			  }}
 			  uuid={t.uuid}
+			  groupUuid={t.groupUuid}
 			  key={t.uuid}/>
 		);
 

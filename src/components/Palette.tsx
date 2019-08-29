@@ -26,7 +26,11 @@ export class Palette extends React.Component<PaletteProps> {
 	render() {
 		return (
 			<div ref={this.ref}>
-				<Table position={this.tablePosition} uuid={""} onStop={this.createTable.bind(this)}></Table>
+				<Table
+				  position={this.tablePosition}
+				  uuid={""}
+				  groupUuid={""}
+				  onStop={this.createTable.bind(this)}/>
 			</div>
 		);
 	}

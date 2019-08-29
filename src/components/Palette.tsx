@@ -11,11 +11,6 @@ interface PaletteProps {
 
 @observer
 export class Palette extends React.Component<PaletteProps> {
-	@observable tablePosition: any = {
-		x: 20,
-		y: 20,
-	};
-
 	@observable mannequinTable: ObjectModel = new ObjectModel();
 
 	ref: React.RefObject<HTMLDivElement>;
@@ -25,7 +20,10 @@ export class Palette extends React.Component<PaletteProps> {
 		this.ref = React.createRef();
 		this.mannequinTable.uuid = "";
 		this.mannequinTable.groupUuid = "";
-		this.mannequinTable.position = this.tablePosition;
+		this.mannequinTable.position = {
+			x: 20,
+			y: 20,
+		};
 	}
 
 	render() {
@@ -49,5 +47,8 @@ export class Palette extends React.Component<PaletteProps> {
 		globalState.createObject({
 			position
 		});
+
+		this.mannequinTable.position.x = 20;
+		this.mannequinTable.position.y = 20;
 	}
 }

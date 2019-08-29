@@ -13,6 +13,7 @@ export class Floor extends React.Component {
 		const tables = globalState.getObjects().map(t =>
 			<Table
 			  model={t}
+			  onStop={() => { globalState.snapGroup = "" }}
 			  key={t.uuid}/>
 		);
 

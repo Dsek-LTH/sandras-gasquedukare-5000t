@@ -1,0 +1,44 @@
+.Table {
+	position: absolute;
+	border: 2px solid white;
+	//margin-left: -16px;
+	//margin-top: -16px;
+	width: 32px;
+	height: 32px;
+	top: 10px;
+	left: 20px;
+
+	>.seats {
+		position: relative;
+
+		>div {
+			position: absolute;
+			width: 8px;
+			height: 8px;
+			border: 1px solid red;
+			border-radius: 4px;
+			margin-left: -4px;
+			margin-top: -4px;
+		}
+
+		>.top {
+			left: 16px;
+			top: 0px;
+		}
+
+		>.right {
+			left: 32px;
+			top: 16px;
+		}
+
+		>.bottom {
+			left: 16px;
+			top: 32px;
+		}
+
+		>.left {
+			left: 0px;
+			top: 16px;
+		}
+	}
+}

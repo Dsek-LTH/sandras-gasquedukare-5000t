@@ -1,6 +1,9 @@
 import * as React from "react";
 import { observer } from "mobx-react";
+import * as uuid from "uuid";
+
 import "./Sidebar.scss";
+import { Palette } from "./Palette";
 
 @observer
 export class Sidebar extends React.Component {
@@ -8,6 +11,7 @@ export class Sidebar extends React.Component {
 		return (
 			<div className="Sidebar">
 				<div>
+					<Palette/>
 				</div>
 			</div>
 		);

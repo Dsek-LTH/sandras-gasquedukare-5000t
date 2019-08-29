@@ -31,6 +31,7 @@ export class Table extends React.Component<TableProps> {
 		const style: any = {};
 		style.left = model.position.x;
 		style.top = model.position.y;
+		style.transform = `rotate(${model.rotation}rad)`;
 
 		if (model.uuid) {
 			if (model.groupUuid == globalState.selectedGroup) {

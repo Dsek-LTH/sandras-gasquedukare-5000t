@@ -1,14 +1,16 @@
 import { observable, action, computed } from "mobx";
 import * as uuid from "uuid";
 import { string, array } from "prop-types";
+import { delta, rotate } from "./vector";
 
-export interface Position {
+export interface Vector {
 	x: number;
 	y: number;
 }
 
 export class ObjectModel {
-	@observable position: Position;
+	@observable position: Vector;
+	@observable rotation: number;
 
 	uuid: string;
 	groupUuid: string;
@@ -16,9 +18,10 @@ export class ObjectModel {
 	constructor() {
 		this.uuid = uuid.v4();
 		this.groupUuid = uuid.v4();
+		this.rotation = 0;
 	}
 
-	get seatOffsets(): Position[] {
+	get seatOffsets(): Vector[] {
 		return [
 			{
 				x: 0, y: -16,
@@ -36,7 +39,7 @@ export class ObjectModel {
 	}
 
 	@computed
-	get seatPositions(): (Position & { index: number, uuid: string })[] {
+	get seatPositions(): (Vector & { index: number, uuid: string })[] {
 		return this.seatOffsets.map((o, i) => ({
 			x: o.x + this.position.x,
 			y: o.y + this.position.y,
@@ -74,7 +77,7 @@ class StateStore {
 		return model;
 	}
 
-	snapPoint(point: Position, skipGroupUuid: string){
+	snapPoint(point: Vector, skipGroupUuid: string){
 		let points = [];
 		for (let o of this.getObjects()) {
 			if (o.groupUuid === skipGroupUuid) continue;
@@ -114,9 +117,27 @@ class StateStore {
 	getGroup(groupUuid: string): ObjectModel[] {
 		return this.getObjects().filter(o => o.groupUuid === groupUuid);
 	}
+
+	setRotation(uuid: string, angle: number) {
+		const object = this.getObject(uuid);
+		const deltaAngle = angle - object.rotation;
+		object.rotation = angle;
+
+		const group = this.getGroup(object.groupUuid);
+		for (const member of group) {
+			if (member.uuid === uuid) continue;
+			const d = delta(object.position, member.position);
+			const rotated = rotate(d, deltaAngle);
+			member.rotation += deltaAngle;
+			member.position = {
+				x: object.position.x + rotated.x,
+				y: object.position.y + rotated.y,
+			};
+		}
+	}
 }
 
-function distance(a: Position, b: Position): number {
+function distance(a: Vector, b: Vector): number {
 	return Math.hypot(b.x - a.x, b.y - a.y);
 }
 

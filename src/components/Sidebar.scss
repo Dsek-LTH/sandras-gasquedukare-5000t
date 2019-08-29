@@ -10,4 +10,12 @@
 	padding: 1px;
 
 	transition: width 1s;
+
+	input {
+		margin-top: 50px;
+		font-size: 12pt;
+		&:after {
+			content: "°";
+		}
+	}
 }

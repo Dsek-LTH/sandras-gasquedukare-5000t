@@ -1,0 +1,10 @@
+@import "./theme";
+
+.Sidebar {
+	background-color: $PanelBackground;
+//	height: 100vh;
+	padding: 1px;
+
+	width: 400px;
+	transition: width 1s;
+}

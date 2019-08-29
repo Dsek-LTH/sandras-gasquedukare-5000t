@@ -1,0 +1,16 @@
+@import "./theme";
+
+body {
+	background-color: $AppBackground;
+}
+
+.App {
+	color: $BaseTextColor;
+	display: flex;
+	flex-direction: row;
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+}

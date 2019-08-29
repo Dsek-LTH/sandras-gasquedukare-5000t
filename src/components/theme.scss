@@ -1,0 +1,33 @@
+$AppBackground: #101015;
+$PanelBackground: #202025;
+$GridLineColor: #171717;
+$BaseTextColor: #cccccc;
+$AccentColor: #6065ff;
+$TitleFont: "Audiowide";
+
+input {
+	font-family: $TitleFont;
+	background-color: $AppBackground;
+	border: none;
+	font-size: 18pt;
+	padding: 10px;
+	text-align: center;
+	border-radius: 5px;
+	color: $BaseTextColor;
+	outline-color: $AccentColor;
+}
+
+button {
+	color: $BaseTextColor;
+	font-family: $TitleFont;
+	background-color: $AccentColor;
+	border: none;
+	font-size: 18pt;
+	padding: 10px 20px;
+	border-radius: 5px;
+	outline: none;
+
+	&:hover {
+		background-color: darken($AccentColor, 5%);
+	}
+}

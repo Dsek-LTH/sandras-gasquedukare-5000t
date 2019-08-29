@@ -1,0 +1,10 @@
+@import "./theme";
+
+.Floor {
+	overflow-x: scroll;
+	overflow-y: hidden;
+	flex-grow: 1;
+	background-size: 40px 40px;
+	background-image: linear-gradient(to right, $GridLineColor 1px, transparent 1px), linear-gradient(to bottom, $GridLineColor 1px, transparent 1px);
+	background-attachment: local;
+}

@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"target": "es2018",
+		"noImplicitAny": true,
+		"outDir": "build",
+		"jsx": "react",
+		"experimentalDecorators": true,
+		"sourceMap": true
+	},
+	"include": ["src"]
+}

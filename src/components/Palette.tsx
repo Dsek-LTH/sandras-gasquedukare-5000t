@@ -2,7 +2,7 @@ import * as React from "react";
 import { Table } from "./objects/Table";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
-import globalState from "../store";
+import globalState, { ObjectModel } from "../store";
 import { DraggableData } from "react-draggable";
 
 interface PaletteProps {
@@ -16,20 +16,23 @@ export class Palette extends React.Component<PaletteProps> {
 		y: 20,
 	};
 
+	@observable mannequinTable: ObjectModel = new ObjectModel();
+
 	ref: React.RefObject<HTMLDivElement>;
 
 	constructor(props: PaletteProps) {
 		super(props);
 		this.ref = React.createRef();
+		this.mannequinTable.uuid = "";
+		this.mannequinTable.groupUuid = "";
+		this.mannequinTable.position = this.tablePosition;
 	}
 
 	render() {
 		return (
 			<div ref={this.ref}>
 				<Table
-				  position={this.tablePosition}
-				  uuid={""}
-				  groupUuid={""}
+				  model={this.mannequinTable}
 				  onStop={this.createTable.bind(this)}/>
 			</div>
 		);

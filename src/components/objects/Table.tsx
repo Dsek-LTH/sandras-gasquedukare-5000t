@@ -2,7 +2,7 @@ import * as React from "react";
 import Draggable, { DraggableData, DraggableEventHandler } from "react-draggable";
 
 import "./Table.scss";
-import globalState from "../../store";
+import globalState, { ObjectModel } from "../../store";
 import { action } from "mobx";
 import { observer } from "mobx-react";
 
@@ -10,9 +10,7 @@ const SELECTED_COLOR = "#8080ff";
 const SELECTED_GROUP_COLOR = "magenta";
 
 interface TableProps {
-	uuid: string;
-	groupUuid: string;
-	position: any;
+	model: ObjectModel;
 	onStop?: DraggableEventHandler;
 	onDrag?: DraggableEventHandler;
 }
@@ -20,21 +18,22 @@ interface TableProps {
 @observer
 export class Table extends React.Component<TableProps> {
 	render() {
+		const model = this.props.model;
 		const style: any = {};
 
-		if (this.props.uuid) {
-			if (this.props.groupUuid == globalState.selectedGroup) {
+		if (model.uuid) {
+			if (model.groupUuid == globalState.selectedGroup) {
 				style.borderColor = SELECTED_GROUP_COLOR;
 			}
 
-			if (this.props.uuid == globalState.selected) {
+			if (model.uuid == globalState.selected) {
 				style.borderColor = SELECTED_COLOR;
 			}
 		}
 
 		return (
 			<Draggable
-			  position={this.props.position} 
+			  position={model.position} 
 			  onStart={this.select.bind(this)}
 			  onStop={this.props.onStop}
 			  onDrag={this.props.onDrag}>
@@ -52,11 +51,17 @@ export class Table extends React.Component<TableProps> {
 
 	@action
 	private select() {
-		if (!this.props.uuid) {
+		if (!this.props.model.uuid) {
 			return;
 		}
 
-		globalState.selected = this.props.uuid;
-		globalState.selectedGroup = this.props.groupUuid;
+		globalState.selected = this.props.model.uuid;
+		globalState.selectedGroup = this.props.model.groupUuid;
+	}
+
+	@action
+	private onDrag(event: any, data: DraggableData) {
+		this.props.model.position.x = data.x;
+		this.props.model.position.y = data.y;
 	}
 }

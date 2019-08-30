@@ -11,6 +11,10 @@ export function delta(a: Vector, b: Vector): Vector {
 	};
 }
 
+export function normalize(vector: Vector): Vector {
+	return multiply(vector, 1 / getMagnitude(vector));
+}
+
 export function fromAngle(angle: number): Vector {
 	return {
 		x: Math.cos(angle),

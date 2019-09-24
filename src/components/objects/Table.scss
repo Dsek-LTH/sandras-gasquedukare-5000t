@@ -1,27 +1,25 @@
 .Table {
-	position: absolute;
-	//margin-left: -16px;
-	//margin-top: -16px;
-	//width: 32px;
-	//height: 32px;
-	top: 10px;
-	left: 20px;
-	border: 1px solid white;
-
-	>.seats {
-		position: absolute;
-
-		>div {
-			position: absolute;
-			width: 8px;
-			height: 8px;
-			border: 1px solid red;
-			border-radius: 4px;
-			margin-left: -4px;
-			margin-top: -4px;
-		}
-
-		/*
+    position: absolute;
+    //margin-left: -16px;
+    //margin-top: -16px;
+    //width: 32px;
+    //height: 32px;
+    top: 10px;
+    left: 20px;
+    border: 1px solid white;
+    >.seats {
+        position: absolute;
+        pointer-events: none;
+        >div {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border: 1px solid red;
+            border-radius: 4px;
+            margin-left: -4px;
+            margin-top: -4px;
+        }
+        /*
 		>.top {
 			left: 16px;
 			top: 0px;
@@ -45,5 +43,5 @@
 			border-color: cyan;
 		}
 		*/
-	}
+    }
 }

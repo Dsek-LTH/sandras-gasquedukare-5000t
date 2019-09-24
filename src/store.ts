@@ -8,9 +8,6 @@ class StateStore {
 	@observable selectedGroup: string = "";
 	@observable snapGroup: string = "";
 
-	constructor() {
-	}
-	
 	public getObject(uuid: string): ObjectModel {
 		return this.objects[uuid];
 	}
@@ -23,6 +20,7 @@ class StateStore {
 	public createObject(partialModel: Partial<ObjectModel>): ObjectModel {
 		const model = new ObjectModel();
 		model.position = partialModel.position;
+		model.groupUuid = partialModel.groupUuid || model.groupUuid;
 
 		this.objects[model.uuid] = model;
 		this.selected = model.uuid;
@@ -30,7 +28,7 @@ class StateStore {
 		return model;
 	}
 
-	snapPoint(point: Vector, index: number, skipGroupUuid: string){
+	snapPoint(point: Vector, index: number, skipGroupUuid: string) {
 		let points = [];
 		for (let o of this.getObjects()) {
 			if (o.groupUuid === skipGroupUuid) continue;

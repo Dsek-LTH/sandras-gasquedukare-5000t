@@ -1,26 +1,25 @@
 {
-  "name": "sandras-gasquedukare",
-  "version": "0.0.1",
-  "main": "build/index.js",
-  "author": "Nils Ceberg",
-  "license": "none",
-  "private": true,
-  "devDependencies": {
-    "@types/react": "^16.8.23",
-    "@types/react-dom": "^16.8.4",
-    "@types/react-jss": "^8.6.3",
-    "@types/uuid": "^3.4.5",
-    "fuse-box": "^3.7.1",
-    "node-sass": "^4.12.0",
-    "typescript": "^3.5.3"
-  },
-  "dependencies": {
-    "mobx": "^5.11.0",
-    "mobx-react": "^6.1.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-draggable": "^3.3.2",
-    "react-jss": "^8.6.1",
-    "uuid": "^3.3.3"
-  }
+    "name": "sandras-gasquedukare",
+    "version": "0.0.1",
+    "main": "build/index.js",
+    "author": "Nils Ceberg",
+    "license": "none",
+    "private": true,
+    "devDependencies": {
+        "@types/react": "^16.8.23",
+        "@types/react-dom": "^16.8.4",
+        "@types/react-jss": "^8.6.3",
+        "@types/uuid": "^3.4.5",
+        "fuse-box": "^3.7.1",
+        "node-sass": "^4.12.0",
+        "typescript": "^3.5.3"
+    },
+    "dependencies": {
+        "mobx": "^5.11.0",
+        "mobx-react": "^6.1.1",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
+        "react-draggable": "^3.3.2",
+        "uuid": "^3.3.3"
+    }
 }

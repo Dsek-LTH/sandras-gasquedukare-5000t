@@ -14,7 +14,7 @@ export class ObjectModel {
 
 	uuid: string;
 	groupUuid: string;
-	
+
 	width: number = ObjectModel.DEFAULT_WIDTH;
 	depth: number = ObjectModel.DEFAULT_DEPTH;
 

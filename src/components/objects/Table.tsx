@@ -59,22 +59,22 @@ export class Table extends React.Component<TableProps> {
 			}
 		}
 
-		const seats = model.seatLocalOffsets.map((s, i) => 
+		const seats = model.seatLocalOffsets.map((s, i) =>
 			<div key={i} style={{
 				//transform: `translate(${s.x}px, 0px)`,
 				left: s.x + meters(model.width / 2),
 				top: s.y + meters(model.depth / 2),
-			}}/>
+			}}>{/* här man man skriva namn*/}</div>
 		);
 
 		return (
 			<DraggableCore
-			  onStart={this.select.bind(this)}
-			  onStop={this.onStop.bind(this)}
-			  onDrag={this.onDrag.bind(this)}>
+				onStart={this.select.bind(this)}
+				onStop={this.onStop.bind(this)}
+				onDrag={this.onDrag.bind(this)}>
 				<div className="Table" style={style}>
 					<div className="seats">
-						{ seats }
+						{seats}
 					</div>
 				</div>
 			</DraggableCore>

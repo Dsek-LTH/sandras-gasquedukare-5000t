@@ -2,9 +2,10 @@ import * as React from "react";
 import Draggable, { DraggableData, DraggableEventHandler, DraggableCore } from "react-draggable";
 
 import "./Table.scss";
-import globalState, { ObjectModel } from "../../store";
+import globalState from "../../store";
 import { action } from "mobx";
 import { observer } from "mobx-react";
+import { ObjectModel, meters } from "../../model/ObjectModel";
 
 const SELECTED_COLOR = "#8080ff";
 const SELECTED_GROUP_COLOR = "magenta";
@@ -32,6 +33,17 @@ export class Table extends React.Component<TableProps> {
 		style.left = model.position.x;
 		style.top = model.position.y;
 		style.transform = `rotate(${model.rotation}rad)`;
+		style.width = meters(model.width);
+		style.height = meters(model.depth);
+		style.marginLeft = -meters(model.width / 2);
+		style.marginTop = -meters(model.depth / 2);
+
+		//const areaStyle: any = {
+		//	width: meters(model.width),
+		//	height: meters(model.depth),
+		//	marginLeft: -meters(model.width / 2),
+		//	marginTop: -meters(model.depth / 2)
+		//};
 
 		if (model.uuid) {
 			if (model.groupUuid == globalState.selectedGroup) {
@@ -47,6 +59,14 @@ export class Table extends React.Component<TableProps> {
 			}
 		}
 
+		const seats = model.snapLocalOffsets.map((s, i) => 
+			<div key={i} style={{
+				//transform: `translate(${s.x}px, 0px)`,
+				left: s.x + meters(model.width / 2),
+				top: s.y + meters(model.depth / 2),
+			}}/>
+		);
+
 		return (
 			<DraggableCore
 			  onStart={this.select.bind(this)}
@@ -54,10 +74,7 @@ export class Table extends React.Component<TableProps> {
 			  onDrag={this.onDrag.bind(this)}>
 				<div className="Table" style={style}>
 					<div className="seats">
-						<div className="top"/>
-						<div className="right"/>
-						<div className="bottom"/>
-						<div className="left"/>
+						{ seats }
 					</div>
 				</div>
 			</DraggableCore>

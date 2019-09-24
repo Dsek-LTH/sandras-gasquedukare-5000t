@@ -2,8 +2,9 @@ import * as React from "react";
 import { Table } from "./objects/Table";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
-import globalState, { ObjectModel } from "../store";
+import globalState from "../store";
 import { DraggableData } from "react-draggable";
+import { ObjectModel } from "../model/ObjectModel";
 
 interface PaletteProps {
 

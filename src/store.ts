@@ -1,58 +1,6 @@
 import { observable, action, computed } from "mobx";
-import * as uuid from "uuid";
-import { string, array } from "prop-types";
-import { delta, rotate, normalize, getAngle, multiply } from "./vector";
-
-export interface Vector {
-	x: number;
-	y: number;
-}
-
-export class ObjectModel {
-	@observable position: Vector;
-	@observable rotation: number;
-
-	uuid: string;
-	groupUuid: string;
-
-	constructor() {
-		this.uuid = uuid.v4();
-		this.groupUuid = uuid.v4();
-		this.rotation = 0;
-	}
-
-	get seatOffsets(): Vector[] {
-		return [
-			{
-				x: 0, y: -16,
-			},
-			{
-				x: 16, y: 0,
-			},
-			{
-				x: 0, y: 16,
-			},
-			{
-				x: -16, y: 0,
-			},
-		].map(o => rotate(o, this.rotation));
-	}
-
-	get seatNormals(): Vector[] {
-		return this.seatOffsets.map(normalize);
-	}
-
-	@computed
-	get seatPositions(): (Vector & { index: number, uuid: string, normal: Vector })[] {
-		return this.seatOffsets.map((o, i) => ({
-			x: o.x + this.position.x,
-			y: o.y + this.position.y,
-			uuid: this.uuid,
-			index: i,
-			normal: normalize(o),
-		}));
-	}
-}
+import { delta, rotate, normalize, getAngle, multiply, Vector } from "./vector";
+import { ObjectModel } from "./model/ObjectModel";
 
 class StateStore {
 	@observable objects: { [key: string]: ObjectModel } = {};
@@ -86,7 +34,7 @@ class StateStore {
 		let points = [];
 		for (let o of this.getObjects()) {
 			if (o.groupUuid === skipGroupUuid) continue;
-			points.push(...(o.seatPositions.map(p => ({ ...p, index: index }))));
+			points.push(...(o.snapPositions.map(p => ({ ...p, index: index }))));
 		}
 
 		points = points.filter(a => distance(point, a) < 10);
@@ -102,7 +50,7 @@ class StateStore {
 
 	@action
 	snapObject(object: ObjectModel) {
-		let points = object.seatPositions.map(
+		let points = object.snapPositions.map(
 			(p, i) => this.snapPoint(p, i, object.groupUuid)
 		).filter(p => p !== null);
 
@@ -113,12 +61,12 @@ class StateStore {
 			// Rotate object (group) so that the snapped points normals
 			// are opposite those of the snappee.
 			const snappeeNormalAngle = getAngle(multiply(point.normal, -1));
-			const snapperNormalAngle = getAngle(object.seatNormals[point.index]);
+			const snapperNormalAngle = getAngle(object.snapNormals[point.index]);
 			const deltaAngle = snappeeNormalAngle - snapperNormalAngle;
 			console.log(object.rotation + deltaAngle);
 			this.setRotation(object.uuid, object.rotation + deltaAngle);
 
-			const offset = object.seatOffsets[point.index];
+			const offset = object.snapOffsets[point.index];
 			point.x -= offset.x;
 			point.y -= offset.y;
 			return point;

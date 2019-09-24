@@ -1,4 +1,7 @@
-import { Vector } from "./store";
+export interface Vector {
+	x: number;
+	y: number;
+}
 
 export function distance(a: Vector, b: Vector): number {
 	return Math.hypot(b.x - a.x, b.y - a.y);

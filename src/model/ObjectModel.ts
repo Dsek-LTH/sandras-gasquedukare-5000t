@@ -6,14 +6,17 @@ export const METER = 64;
 export const meters = (m: number) => m * METER;
 
 export class ObjectModel {
+	static DEFAULT_WIDTH: number = 1.83;
+	static DEFAULT_DEPTH: number = 0.76;
+
 	@observable position: Vector;
 	@observable rotation: number;
 
 	uuid: string;
 	groupUuid: string;
 	
-	width: number = 1.83;
-	depth: number = 0.76;
+	width: number = ObjectModel.DEFAULT_WIDTH;
+	depth: number = ObjectModel.DEFAULT_DEPTH;
 
 	snaps: Vector[] = [
 		//{

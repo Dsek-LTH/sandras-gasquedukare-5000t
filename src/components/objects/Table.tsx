@@ -59,7 +59,7 @@ export class Table extends React.Component<TableProps> {
 			}
 		}
 
-		const seats = model.snapLocalOffsets.map((s, i) => 
+		const seats = model.seatLocalOffsets.map((s, i) => 
 			<div key={i} style={{
 				//transform: `translate(${s.x}px, 0px)`,
 				left: s.x + meters(model.width / 2),

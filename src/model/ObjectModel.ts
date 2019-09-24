@@ -2,7 +2,7 @@ import { Vector, rotate, normalize } from "../vector";
 import { observable, computed } from "mobx";
 import * as uuid from "uuid";
 
-export const METER = 32;
+export const METER = 64;
 export const meters = (m: number) => m * METER;
 
 export class ObjectModel {
@@ -16,32 +16,59 @@ export class ObjectModel {
 	depth: number = 0.76;
 
 	snaps: Vector[] = [
+		//{
+		//	x: -this.width / 2 + this.depth / 2, y: -this.depth / 2,
+		//},
+		//{
+		//	x: this.width / 2 - this.depth / 2, y: -this.depth / 2,
+		//},
 		{
-			x: -this.width / 2 + this.depth / 2, y: -this.depth / 2,
+			x: this.width / 2, y: 0,
+		},
+		//{
+		//	x: -this.width / 2 + this.depth / 2, y: this.depth / 2,
+		//},
+		//{
+		//	x: this.width / 2 - this.depth / 2, y: this.depth / 2,
+		//},
+		{
+			x: -this.width / 2, y: 0,
+		},
+	];
+
+	seats: Vector[] = [
+		{
+			x: -this.width * 3 / 10, y: -this.depth / 2,
 		},
 		{
-			x: this.width / 2 - this.depth / 2, y: -this.depth / 2,
+			x: 0, y: -this.depth / 2,
+		},
+		{
+			x: this.width * 3 / 10, y: -this.depth / 2,
 		},
 		{
 			x: this.width / 2, y: 0,
 		},
 		{
-			x: -this.width / 2 + this.depth / 2, y: this.depth / 2,
+			x: this.width * 3 / 10, y: this.depth / 2,
 		},
 		{
-			x: this.width / 2 - this.depth / 2, y: this.depth / 2,
+			x: 0, y: this.depth / 2,
+		},
+		{
+			x: -this.width * 3 / 10, y: this.depth / 2,
 		},
 		{
 			x: -this.width / 2, y: 0,
 		},
 	];
 
-	public snapNormals: Vector[] = [
-		{ x: 0, y: -1 },
-		{ x: 0, y: -1 },
+	public snapLocalNormals: Vector[] = [
+		//{ x: 0, y: -1 },
+		//{ x: 0, y: -1 },
 		{ x: 1, y: 0 },
-		{ x: 0, y: 1 },
-		{ x: 0, y: 1 },
+		//{ x: 0, y: 1 },
+		//{ x: 0, y: 1 },
 		{ x: -1, y: 0 },
 	]
 
@@ -59,6 +86,10 @@ export class ObjectModel {
 		return this.snapLocalOffsets.map(o => rotate(o, this.rotation));
 	}
 
+	get snapNormals(): Vector[] {
+		return this.snapLocalNormals.map(o => rotate(o, this.rotation));
+	}
+
 	@computed
 	get snapPositions(): (Vector & { index: number, uuid: string, normal: Vector })[] {
 		return this.snapOffsets.map((o, i) => ({
@@ -68,5 +99,13 @@ export class ObjectModel {
 			index: i,
 			normal: normalize(o),
 		}));
+	}
+
+	get seatLocalOffsets(): Vector[] {
+		return this.seats.map(o => ({ x: meters(o.x), y: meters(o.y) }));
+	}
+
+	get seatOffsets(): Vector[] {
+		return this.seatLocalOffsets.map(o => rotate(o, this.rotation));
 	}
 }

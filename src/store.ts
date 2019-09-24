@@ -37,7 +37,7 @@ class StateStore {
 			points.push(...(o.snapPositions.map(p => ({ ...p, index: index }))));
 		}
 
-		points = points.filter(a => distance(point, a) < 10);
+		points = points.filter(a => distance(point, a) < 20);
 		//points.sort((a, b) => distance(point, a) - distance(point, b));
 
 		if (points.length > 0) {

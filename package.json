@@ -11,7 +11,7 @@
         "@types/react-jss": "^8.6.3",
         "@types/uuid": "^3.4.5",
         "fuse-box": "^3.7.1",
-        "node-sass": "^4.12.0",
+        "node-sass": "^4.13.1",
         "typescript": "^3.5.3"
     },
     "dependencies": {
